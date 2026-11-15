@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block contenido %}<h1>Usuarios</h1>
+<a class="btn btn-success mb-3" href="{% url 'cuentas:crear' %}">Crear usuario</a><div class="card p-3"><div class="table-responsive"><table class="table tabla-datos"><thead><tr><th>Usuario</th><th>Nombre</th><th>Rol</th><th>Activo</th><th>Acciones</th></tr></thead><tbody>
+{% for registro in usuarios %}<tr><td>{{ registro.username }}</td><td>{{ registro.get_full_name }}</td><td>{{ registro.get_rol_display }}</td><td>{{ registro.is_active|yesno:'Sí,No' }}</td><td><a href="{% url 'cuentas:editar' registro.pk %}">Editar</a> <a class="text-danger ml-2" href="{% url 'cuentas:eliminar' registro.pk %}">Eliminar</a></td></tr>{% endfor %}
+</tbody></table></div></div>{% endblock %}

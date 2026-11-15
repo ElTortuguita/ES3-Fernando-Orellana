@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block contenido %}<h1>Categorías</h1>
+<a class="btn btn-success mb-3" href="{% url 'experiencias:categoria_crear' %}">Crear categoría</a><div class="card p-3"><div class="table-responsive"><table class="table tabla-datos"><thead><tr><th>Nombre</th><th>Descripción</th><th>Activa</th><th>Acciones</th></tr></thead><tbody>
+{% for registro in categorias %}<tr><td>{{ registro.nombre }}</td><td>{{ registro.descripcion }}</td><td>{{ registro.activo|yesno:'Sí,No' }}</td><td><a href="{% url 'experiencias:categoria_editar' registro.pk %}">Editar</a> <a class="text-danger ml-2" href="{% url 'experiencias:categoria_eliminar' registro.pk %}">Eliminar</a></td></tr>{% endfor %}
+</tbody></table></div></div>{% endblock %}

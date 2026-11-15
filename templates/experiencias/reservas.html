@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block contenido %}<h1>{% if user.rol == 'turista' %}Mis reservas{% else %}Todas las reservas{% endif %}</h1>
+<div class="card p-3"><div class="table-responsive"><table class="table tabla-datos"><thead><tr><th>Número</th><th>Turista</th><th>Experiencia</th><th>Fecha de actividad</th><th>Inscripción</th><th>Pago</th></tr></thead><tbody>
+{% for registro in reservas %}<tr><td>{{ registro.pk }}</td><td>{{ registro.usuario }}</td><td>{{ registro.experiencia }}</td><td data-order="{{ registro.experiencia.fecha|date:'c' }}">{{ registro.experiencia.fecha|date:'d/m/Y H:i' }}</td><td data-order="{{ registro.fecha_inscripcion|date:'c' }}">{{ registro.fecha_inscripcion|date:'d/m/Y H:i' }}</td><td>{{ registro.get_estado_pago_display }}{% if user.rol == 'admin' %} <a href="{% url 'experiencias:pago' registro.pk %}">Actualizar</a>{% endif %}</td></tr>{% endfor %}
+</tbody></table></div></div>{% endblock %}

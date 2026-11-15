@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block contenido %}
+<h1>Hola, {{ user.first_name|default:user.username }}</h1><p>{{ user.get_rol_display }}</p>
+<div class="row mt-4">
+{% if user.rol != 'turista' %}<div class="col-md-4 mb-3"><div class="card p-4"><h2>{{ total_experiencias }}</h2><p>Experiencias{% if user.rol == 'guia' %} de tu autoría{% endif %}</p><a href="{% url 'experiencias:lista' %}">Gestionar experiencias</a></div></div>{% endif %}
+{% if user.rol != 'guia' %}<div class="col-md-4 mb-3"><div class="card p-4"><h2>{{ total_reservas }}</h2><p>Reservas{% if user.rol == 'turista' %} personales{% endif %}</p><a href="{% url 'experiencias:reservas' %}">Consultar reservas</a></div></div>{% endif %}
+{% if user.rol == 'admin' %}<div class="col-md-4 mb-3"><div class="card p-4"><h2>{{ total_categorias }}</h2><p>Categorías</p><a href="{% url 'experiencias:categorias' %}">Gestionar categorías</a></div></div>{% endif %}</div>
+{% if user.rol == 'guia' %}<p>Puedes crear y editar tus experiencias. La administración gestiona las categorías y las eliminaciones.</p>{% endif %}
+{% if user.rol == 'turista' %}<a class="btn btn-success" href="{% url 'experiencias:catalogo' %}">Buscar una experiencia</a>{% endif %}
+{% endblock %}
