@@ -33,6 +33,12 @@ Para iniciar:
 
 Abrir http://127.0.0.1:8013/ y consultar `CREDENCIALES.md`. Las dependencias de SB Admin 2 y DataTables están guardadas localmente. La aplicación no necesita una CDN para mostrarse.
 
+## Ejecución desde Visual Studio Code
+
+Abrir esta carpeta con **File > Open Folder**. Tener instaladas las extensiones Python y Python Debugger de Microsoft. Después de crear `.venv` e instalar `requirements.txt` como se indica arriba, presionar **F5** y usar la configuración **Aventuras del Sur - Django**. La configuración de `.vscode/launch.json` inicia el servidor en la terminal integrada con el Python de `.venv`.
+
+Abrir http://127.0.0.1:8013/. Mantener VS Code abierto durante la demostración. Para detener el servidor, usar **Shift+F5**. MySQL80 debe estar iniciado. Si el puerto 8013 ya está ocupado, comprobar si hay otro servidor del proyecto en ejecución antes de iniciarlo otra vez.
+
 ## Organización
 
 - `inventarioAventura`: configuración, rutas generales y conexión MySQL.
