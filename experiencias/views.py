@@ -90,8 +90,11 @@ class ExperienciaEliminar(RolRequeridoMixin, DeleteView):
             messages.error(self.request, 'La experiencia tiene reservas. Puedes desactivarla.')
             return redirect('experiencias:lista')
 
+# Catálogo público: muestra las experiencias disponibles para reservar.
 def catalogo(request):
+    # Busca actividades futuras y activas, con categoría activa, y las ordena por fecha.
     experiencias = Experiencia.objects.filter(activo=True, categoria__activo=True, fecha__gt=timezone.now()).order_by('fecha')
+    # Envía las experiencias a la plantilla que muestra las tarjetas del catálogo.
     return render(request, 'experiencias/catalogo.html', {'experiencias': experiencias})
 
 @login_required

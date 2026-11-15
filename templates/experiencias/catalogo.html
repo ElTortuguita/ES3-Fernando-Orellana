@@ -1,4 +1,46 @@
-{% extends 'base.html' %}{% block contenido %}<h1>Experiencias disponibles</h1><p>Precios en pesos chilenos. Cada reserva corresponde a un cupo.</p><div class="row">
-{% for experiencia in experiencias %}<div class="col-lg-4 col-md-6 mb-4"><article class="card p-4 experiencia"><p class="text-success">{{ experiencia.categoria }}</p><h2 class="h4">{{ experiencia.titulo }}</h2><p>{{ experiencia.descripcion }}</p><p>{{ experiencia.fecha|date:'d/m/Y H:i' }}<br><strong>${{ experiencia.precio }} CLP</strong><br>{{ experiencia.cupos_disponibles }} cupos disponibles</p>
-{% if experiencia.cupos_disponibles > 0 %}{% if user.rol == 'turista' %}<a class="btn btn-success mt-auto" href="{% url 'experiencias:reservar' experiencia.pk %}">Reservar</a>{% elif not user.is_authenticated %}<a class="btn btn-outline-success mt-auto" href="{% url 'cuentas:login' %}">Ingresar para reservar</a>{% endif %}{% else %}<p class="text-danger">Sin cupos</p>{% endif %}</article></div>
-{% empty %}<p>No hay experiencias disponibles por ahora.</p>{% endfor %}</div>{% endblock %}
+{% extends 'base.html' %}
+
+{% block contenido %}
+    <h1>Experiencias disponibles</h1>
+    <p>Precios en pesos chilenos. Cada reserva corresponde a un cupo.</p>
+
+    <div class="row">
+        {# Recorre la lista enviada por la vista y crea una tarjeta por experiencia. #}
+        {% for experiencia in experiencias %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <article class="card p-4 experiencia">
+                    {# Muestra la categoría y los datos de esta experiencia. #}
+                    <p class="text-success">{{ experiencia.categoria }}</p>
+                    <h2 class="h4">{{ experiencia.titulo }}</h2>
+                    <p>{{ experiencia.descripcion }}</p>
+
+                    <p>
+                        {{ experiencia.fecha|date:'d/m/Y H:i' }}<br>
+                        <strong>${{ experiencia.precio }} CLP</strong><br>
+                        {{ experiencia.cupos_disponibles }} cupos disponibles
+                    </p>
+
+                    {# El botón depende de los cupos y del rol de la cuenta. #}
+                    {% if experiencia.cupos_disponibles > 0 %}
+                        {% if user.rol == 'turista' %}
+                            <a class="btn btn-success mt-auto"
+                               href="{% url 'experiencias:reservar' experiencia.pk %}">
+                                Reservar
+                            </a>
+                        {% elif not user.is_authenticated %}
+                            <a class="btn btn-outline-success mt-auto"
+                               href="{% url 'cuentas:login' %}">
+                                Ingresar para reservar
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-danger">Sin cupos</p>
+                    {% endif %}
+                </article>
+            </div>
+        {% empty %}
+            {# Este mensaje aparece cuando la lista no contiene experiencias. #}
+            <p>No hay experiencias disponibles por ahora.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
