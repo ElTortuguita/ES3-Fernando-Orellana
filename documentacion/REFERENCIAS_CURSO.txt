@@ -1,0 +1,69 @@
+Relación con los trabajos del semestre
+
+La implementación mantiene Django con plantillas y formularios del servidor. No incorpora una API REST, un frontend separado ni herramientas de despliegue adicionales.
+
+Repositorio revisado: FernandoEV1 (https://github.com/ElTortuguita/FernandoEV1)
+Evidencia en el código: miPrimeraApp/views.py envía un contexto a render
+Aplicación en esta evaluación: Bienvenida y panel de core
+
+Repositorio revisado: Evaluacion2Repuestos (https://github.com/ElTortuguita/Evaluacion2Repuestos)
+Evidencia en el código: Modelos, ModelForm, validación con is_valid, Bootstrap
+Aplicación en esta evaluación: Campos del catálogo y formularios
+
+Repositorio revisado: PracticaTaller (https://github.com/ElTortuguita/PracticaTaller)
+Evidencia en el código: CRUD, get_object_or_404 y DataTables en el listado
+Aplicación en esta evaluación: Confirmación de acciones y búsqueda, ordenamiento y paginación
+
+Repositorio revisado: EV3PRACTICA (https://github.com/ElTortuguita/EV3PRACTICA)
+Evidencia en el código: login_required, vistas de autenticación y SB Admin 2
+Aplicación en esta evaluación: Catálogo con reservas protegidas, login, logout y panel
+
+Repositorio revisado: TallerMedico (https://github.com/ElTortuguita/TallerMedico)
+Evidencia en el código: AbstractUser, rol, RolRequeridoMixin, CRUD con clases y filtros por usuario
+Aplicación en esta evaluación: Usuario, permisos y consultas según autoría e historial
+
+
+En TallerMedico la conexión usa mysql.connector.django. Se conserva ese controlador con Django 5.2.18.
+
+La inspección se realizó sobre estos commits:
+
+- FernandoEV1: e2fd016800c70c73590137ffa7901459b958b9e4.
+- Evaluacion2Repuestos: fd35e119b99e62b4564f18bb47ad049c77f9f5eb.
+- PracticaTaller: a0aa5f152c02ce5f6de636501556c140b98b567b.
+- EV3PRACTICA: 5f9208ee1dbd4340f501b3b21f600a8d8811e405.
+- TallerMedico: c828089e054be4dbc0b2cf282cfd57a94b36f4d2.
+
+Adaptaciones que requieren comprensión
+
+Los repositorios permiten identificar técnicas utilizadas, pero no demuestran por sí solos qué explicó el profesor en cada clase. Las relaciones del modelo Reserva y sus reglas se construyeron para el nuevo enunciado. Se mantiene un flujo simple de consulta, validación y guardado. El control de concurrencia entre reservas simultáneas queda fuera de esta implementación de aula, porque ese patrón no aparece en los ejemplos revisados.
+
+unique_together exige en la base que la pareja usuario y experiencia no se repita. Los validadores de precio, cupo y fecha aplican las reglas del nuevo problema. Las pruebas automatizadas son material de comprobación y no una funcionalidad que deba exponerse como contenido del curso.
+
+Correspondencia con la pauta
+
+Requisito: Proyecto y tres apps
+Ubicación: inventarioAventura/, core/, cuentas/, experiencias/
+
+Requisito: Usuario extendido y roles
+Ubicación: cuentas/models.py, cuentas/mixins.py
+
+Requisito: Categoría, experiencia y reserva
+Ubicación: experiencias/models.py
+
+Requisito: CRUD y autoría
+Ubicación: experiencias/views.py, cuentas/views.py
+
+Requisito: Sesión y acceso
+Ubicación: Middleware de settings.py, cuentas/urls.py, mixin y decorador
+
+Requisito: MySQL
+Ubicación: settings.py, migraciones y base_datos/
+
+Requisito: SB Admin 2 y DataTables
+Ubicación: templates/base.html, static/js/tablas.js
+
+Requisito: Cuentas y registros mínimos
+Ubicación: cargar_demo.py, CREDENCIALES.txt
+
+Requisito: Respaldo y documentación
+Ubicación: SQL entregado, README y esta carpeta

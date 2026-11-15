@@ -36,4 +36,4 @@ Host local: 127.0.0.1
 Puerto: 3306
 Base: aventuras_del_sur_db
 El profesor debe configurar su propio usuario y contraseña de MySQL
-en inventarioAventura/config_local.py, siguiendo README.md.
+en inventarioAventura/config_local.py, siguiendo README.txt.

@@ -1,0 +1,88 @@
+Exposición de seis minutos
+
+Practica las ideas con tus propias palabras y abre los archivos indicados. El guion describe el comportamiento implementado. Evita afirmar que conoces una parte hasta poder modificarla y explicar su resultado.
+
+Preparación
+
+Inicia MySQL80 y el servidor Django. Abre la presentación, la página principal, VS Code y la conexión local de Workbench. Ten anotadas las cuentas demo. El respaldo conserva las reservas de las capturas. Si haces nuevas pruebas, los contadores aumentarán.
+
+0:00 a 0:35 Presentación del problema
+
+“El sistema permite administrar experiencias de un ecoparque e inscribir visitantes. Separé los accesos en administrador, guía y turista. Django procesa las solicitudes y guarda los datos en MySQL.”
+
+Muestra la portada y la bienvenida pública.
+
+0:35 a 1:15 Estructura del proyecto
+
+“El proyecto principal es inventarioAventura. La app core tiene la bienvenida y el panel. Cuentas contiene los usuarios y el acceso. Experiencias tiene categorías, actividades y reservas. Una URL dirige la solicitud a una vista, que consulta el modelo y entrega los datos a una plantilla.”
+
+Señala inventarioAventura/urls.py y los nombres de las apps. No necesitas leer todas las líneas.
+
+1:15 a 2:00 Modelo y MySQL
+
+“Usuario extiende AbstractUser y agrega el campo rol. Cada experiencia pertenece a una categoría y tiene un usuario creador. Reserva relaciona al turista con la experiencia y guarda la fecha de inscripción y el estado de pago. Uso migraciones para que Django cree las tablas en MySQL. En Workbench puedo consultar los datos y exportar un respaldo.”
+
+En Workbench ejecuta:
+
+USE aventuras_del_sur_db;
+SELECT username, rol FROM cuentas_usuario;
+SELECT titulo, creador_id, categoria_id FROM experiencias_experiencia;
+SELECT usuario_id, experiencia_id, estado_pago FROM experiencias_reserva;
+
+2:00 a 2:50 Permisos y autoría
+
+Ingresa como gabriela. Muestra las cuatro experiencias y la ausencia de la acción Eliminar.
+
+“El mixin comprueba que el usuario tenga sesión y un rol permitido. El queryset del guía filtra por creador igual al usuario de la solicitud. Ese filtro también está en la edición. Si intento acceder a una actividad de otro guía, la vista no encuentra un registro permitido para mí.”
+
+Muestra ExperienciaEditar.get_queryset en experiencias/views.py. Para la demostración, la experiencia 5 pertenece al otro guía: abrir /experiencias/5/editar/ con gabriela debe devolver 404. Con DEBUG=True, Django muestra su página técnica de desarrollo. Es suficiente mostrar el código de estado y volver.
+
+2:50 a 3:55 Demostración administrativa
+
+Cierra sesión e ingresa como fernando. Muestra la lista completa y busca “Kayak” para demostrar DataTables. Crea una categoría llamada “Demostración”, edítala y elimínala sin asociarle experiencias. Esto permite mostrar el CRUD sin afectar el historial.
+
+“Los formularios usan ModelForm. Al enviar un POST, Django valida los campos y guarda el registro. DataTables agrega búsqueda, ordenamiento y paginación a las tablas. La eliminación requiere confirmación y un formulario POST.”
+
+3:55 a 5:15 Reserva e historial
+
+Ingresa como javier, abre el catálogo y reserva “Campamento Mordelina”, que no tiene entre sus tres reservas iniciales. Si ya lo reservaste durante el ensayo, elige otra experiencia que no esté en su historial.
+
+“La reserva toma el usuario desde la sesión. Primero compruebo que la actividad esté disponible, que el turista no tenga una reserva repetida y que quede cupo. El pago empieza pendiente. Después consulto las reservas filtrando por el usuario actual. El turista no puede cambiar su estado de pago.”
+
+Comprueba que el mensaje confirme la inscripción y que aparezca en el historial. Si sobra tiempo, cambia al administrador y actualiza el pago de esa reserva.
+
+5:15 a 6:00 Cierre técnico
+
+“Las vistas protegen los datos aunque alguien escriba una URL directamente. Los formularios rechazan precio negativo, cupo cero y fechas pasadas. Protejo los registros con relaciones para conservar las reservas. Entrego código, migraciones, cuentas de prueba y un respaldo de MySQL.”
+
+Muestra base_datos/aventuras_del_sur_mysql.sql y termina. Si debes llegar a siete minutos, explica una relación o una validación con un ejemplo concreto. Si debes bajar a cinco, acorta la creación de categoría y muestra un registro ya existente.
+
+Preguntas de práctica
+
+¿Qué diferencia hay entre autenticación y autorización? Autenticación determina quién inició sesión. Autorización determina qué puede hacer ese usuario según su rol y la autoría del registro.
+
+¿Basta con esconder el botón Eliminar? No. El servidor también debe rechazar la acción para el guía aunque envíe la solicitud directamente.
+
+¿Por qué filtras también en la edición? Para que cambiar el identificador de la URL no permita editar registros de otra persona.
+
+¿Por qué usas un modelo Reserva? Porque varios usuarios pueden inscribirse en varias experiencias y la relación tiene datos propios: fecha y estado de pago.
+
+¿Dónde está la sesión? El middleware de sesiones la administra. El navegador conserva una cookie identificadora y Django guarda el estado de sesión en la tabla django_session. request.user permite consultar al usuario autenticado. Logout elimina su sesión actual.
+
+¿Qué hace form_valid al crear una experiencia? Asigna self.request.user al campo creador antes de guardar el formulario.
+
+¿Qué ocurre con dos reservas al mismo tiempo? La versión de aula comprueba el cupo antes de guardar, pero no garantiza el límite si dos solicitudes coinciden. Para un sistema con concurrencia habría que ampliar el control de la base de datos. Es una limitación que conviene reconocer si el profesor pregunta.
+
+¿Qué hace PROTECT? Evita borrar un registro que otros registros necesitan. Una experiencia con reservas se desactiva para retirarla del catálogo sin borrar su historial.
+
+¿Workbench es la base de datos? Workbench es la aplicación gráfica para administrar MySQL Server. Django se conecta al servidor mediante el controlador configurado en settings.py.
+
+¿Cómo sabes que el respaldo sirve? Se restauró en un esquema temporal y se compararon los totales de las tablas principales con la base original.
+
+Ejercicios antes de entregar
+
+1. Explica sin leer por qué creador no aparece en el formulario de experiencia.
+2. Cambia la descripción de una experiencia y verifica el cambio en Workbench.
+3. Intenta editar una experiencia del otro guía.
+4. Intenta reservar dos veces y revisa que no aumente el número de inscripciones.
+5. Distingue get_queryset, form_valid, ModelForm y ForeignKey con ejemplos de este proyecto.
