@@ -93,7 +93,7 @@ git remote add origin URL_DEL_REPOSITORIO_NUEVO
 git push -u origin main
 ```
 
-El repositorio remoto de esta evaluación todavía no se ha creado. Los cinco repositorios de referencia se conservaron sin modificaciones.
+Repositorio de esta evaluación: https://github.com/ElTortuguita/ES3-Fernando-Orellana. La rama principal es `main`. La presentación con notas está en `presentacion/`. Los cinco repositorios de referencia se conservaron sin modificaciones.
 
 ## Alcance
 
