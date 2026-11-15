@@ -33,21 +33,21 @@ SELECT usuario_id, experiencia_id, estado_pago FROM experiencias_reserva;
 
 ## 2:00 a 2:50 Permisos y autoría
 
-Ingresa como `guia1`. Muestra las cuatro experiencias y la ausencia de la acción Eliminar.
+Ingresa como `gabriela`. Muestra las cuatro experiencias y la ausencia de la acción Eliminar.
 
 “El mixin comprueba que el usuario tenga sesión y un rol permitido. El queryset del guía filtra por creador igual al usuario de la solicitud. Ese filtro también está en la edición. Si intento acceder a una actividad de otro guía, la vista no encuentra un registro permitido para mí.”
 
-Muestra `ExperienciaEditar.get_queryset` en `experiencias/views.py`. Para la demostración, la experiencia 5 pertenece al otro guía: abrir `/experiencias/5/editar/` con `guia1` debe devolver 404. Con `DEBUG=True`, Django muestra su página técnica de desarrollo. Es suficiente mostrar el código de estado y volver.
+Muestra `ExperienciaEditar.get_queryset` en `experiencias/views.py`. Para la demostración, la experiencia 5 pertenece al otro guía: abrir `/experiencias/5/editar/` con `gabriela` debe devolver 404. Con `DEBUG=True`, Django muestra su página técnica de desarrollo. Es suficiente mostrar el código de estado y volver.
 
 ## 2:50 a 3:55 Demostración administrativa
 
-Cierra sesión e ingresa como `admin`. Muestra la lista completa y busca “Kayak” para demostrar DataTables. Crea una categoría llamada “Demostración”, edítala y elimínala sin asociarle experiencias. Esto permite mostrar el CRUD sin afectar el historial.
+Cierra sesión e ingresa como `fernando`. Muestra la lista completa y busca “Kayak” para demostrar DataTables. Crea una categoría llamada “Demostración”, edítala y elimínala sin asociarle experiencias. Esto permite mostrar el CRUD sin afectar el historial.
 
 “Los formularios usan ModelForm. Al enviar un POST, Django valida los campos y guarda el registro. DataTables agrega búsqueda, ordenamiento y paginación a las tablas. La eliminación requiere confirmación y un formulario POST.”
 
 ## 3:55 a 5:15 Reserva e historial
 
-Ingresa como `turista2`, abre el catálogo y reserva “Equipo para campamento”, que no tiene entre sus tres reservas iniciales. Si ya lo reservaste durante el ensayo, elige otra experiencia que no esté en su historial.
+Ingresa como `javier`, abre el catálogo y reserva “Campamento Mordelina”, que no tiene entre sus tres reservas iniciales. Si ya lo reservaste durante el ensayo, elige otra experiencia que no esté en su historial.
 
 “La reserva toma el usuario desde la sesión. Primero compruebo que la actividad esté disponible, que el turista no tenga una reserva repetida y que quede cupo. El pago empieza pendiente. Después consulto las reservas filtrando por el usuario actual. El turista no puede cambiar su estado de pago.”
 

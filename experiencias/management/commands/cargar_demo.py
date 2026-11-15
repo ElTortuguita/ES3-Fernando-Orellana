@@ -10,16 +10,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         usuarios = []
-        for nombre, rol, nombres in [
-            ('admin', 'admin', 'Administrador'),
-            ('guia1', 'guia', 'Camila'), ('guia2', 'guia', 'Diego'),
-            ('turista1', 'turista', 'Fernanda'), ('turista2', 'turista', 'Tomás'),
+        for nombre, rol, nombres, apellidos in [
+            ('fernando', 'admin', 'Fernando', 'Orellana'),
+            ('gabriela', 'guia', 'Gabriela', 'San Martín'),
+            ('joseismael', 'guia', 'José Ismael', ''),
+            ('mordelina', 'turista', 'Mordelina', 'Orellana'),
+            ('javier', 'turista', 'Javier', 'Orellana'),
         ]:
             usuario, creado = Usuario.objects.get_or_create(username=nombre,
-                defaults={'rol': rol, 'first_name': nombres,
+                defaults={'rol': rol, 'first_name': nombres, 'last_name': apellidos,
                           'is_staff': rol == 'admin', 'is_superuser': rol == 'admin'})
             if creado:
-                usuario.set_password('Aventura2026!')
+                usuario.set_password('Soldierx991')
                 usuario.save()
             usuarios.append(usuario)
         categorias = []
@@ -32,13 +34,22 @@ class Command(BaseCommand):
             categoria, _ = Categoria.objects.get_or_create(nombre=nombre, defaults={'descripcion': descripcion})
             categorias.append(categoria)
         titulos = [
-            'Sendero del bosque nativo', 'Canopy del valle', 'Kayak en la laguna', 'Equipo para trekking',
-            'Caminata al mirador', 'Canopy entre árboles', 'Kayak al atardecer', 'Equipo para campamento',
+            'Sendero de Gabriela', 'Canopy del bosque azul', 'Kayak con Fernando', 'Equipo para paseo familiar',
+            'Ruta de José Ismael', 'Canopy de los Orellana', 'Kayak al atardecer', 'Campamento Mordelina',
         ]
         experiencias = []
         for indice, titulo in enumerate(titulos):
             experiencia, _ = Experiencia.objects.get_or_create(titulo=titulo, creador=usuarios[1 + indice // 4],
-                defaults={'descripcion': f'{titulo}. Actividad del ecoparque con orientación del equipo local.',
+                defaults={'descripcion': [
+                    'Caminata guiada por Gabriela San Martín entre senderos y miradores del ecoparque.',
+                    'Circuito de canopy a cargo de Gabriela, con orientación y equipo de seguridad.',
+                    'Una salida de kayak pensada para compartir un paseo con Fernando Orellana.',
+                    'Arriendo de equipo para que Fernando, Gabriela y la familia recorran los senderos.',
+                    'Recorrido guiado por José Ismael para disfrutar el bosque y llegar al mirador.',
+                    'Una experiencia de canopy para una jornada de aventura de la familia Orellana.',
+                    'Salida de kayak guiada por José Ismael para disfrutar del paisaje al atardecer.',
+                    'Arriendo de equipo de campamento con un nombre dedicado a Mordelina Orellana.',
+                ][indice],
                           'categoria': categorias[indice % 4], 'precio': [12000, 18000, 15000, 8000][indice % 4],
                           'cupo_maximo': 10, 'fecha': timezone.now().replace(hour=14, minute=0, second=0, microsecond=0) + timedelta(days=7 + indice)})
             experiencias.append(experiencia)
