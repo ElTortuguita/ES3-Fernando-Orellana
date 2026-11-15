@@ -33,6 +33,8 @@ Para iniciar:
 
 Abrir http://127.0.0.1:8013/ y consultar `CREDENCIALES.md`. Las dependencias de SB Admin 2 y DataTables están guardadas localmente. La aplicación no necesita una CDN para mostrarse.
 
+Las cuentas de prueba también están en `CREDENCIALES.txt`, para abrirlas como texto simple en Bloc de notas.
+
 ## Ejecución desde Visual Studio Code
 
 Abrir esta carpeta con **File > Open Folder**. Tener instaladas las extensiones Python y Python Debugger de Microsoft. Después de crear `.venv` e instalar `requirements.txt` como se indica arriba, presionar **F5** y usar la configuración **Aventuras del Sur - Django**. La configuración de `.vscode/launch.json` inicia el servidor en la terminal integrada con el Python de `.venv`.

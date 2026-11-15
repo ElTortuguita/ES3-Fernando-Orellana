@@ -1,0 +1,39 @@
+CUENTAS DE DEMOSTRACION - AVENTURAS DEL SUR
+
+Acceso local: http://127.0.0.1:8013/cuentas/login/
+
+Usuario: fernando
+Nombre: Fernando Orellana
+Rol: Administrador
+Contraseña: Soldierx991
+
+Usuario: gabriela
+Nombre: Gabriela San Martín
+Rol: Guía / Operador
+Contraseña: Soldierx991
+
+Usuario: joseismael
+Nombre: José Ismael
+Rol: Guía / Operador
+Contraseña: Soldierx991
+
+Usuario: mordelina
+Nombre: Mordelina Orellana
+Rol: Turista / Cliente
+Contraseña: Soldierx991
+
+Usuario: javier
+Nombre: Javier Orellana
+Rol: Turista / Cliente
+Contraseña: Soldierx991
+
+Cada guía tiene cuatro experiencias. El respaldo SQL entregado contiene
+cuatro reservas de Mordelina y tres de Javier. Las reservas que se agreguen
+durante los ensayos aumentan los totales de la base local.
+
+CONEXION MYSQL
+Host local: 127.0.0.1
+Puerto: 3306
+Base: aventuras_del_sur_db
+El profesor debe configurar su propio usuario y contraseña de MySQL
+en inventarioAventura/config_local.py, siguiendo README.md.
