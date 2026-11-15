@@ -85,7 +85,7 @@ CREATE TABLE `cuentas_usuario` (
 
 LOCK TABLES `cuentas_usuario` WRITE;
 /*!40000 ALTER TABLE `cuentas_usuario` DISABLE KEYS */;
-INSERT INTO `cuentas_usuario` VALUES (1,'pbkdf2_sha256$1000000$UUwpHApcrNJ1yj3gb06Kxm$H3i002Ws8kkRpBqhmXo9Ur98g188IdAXAjhzSRRmxRE=','2026-11-15 01:10:22.007081',1,'fernando','Fernando','Orellana','',1,1,'2026-11-15 00:47:24.098262','admin'),(2,'pbkdf2_sha256$1000000$Uo6Y45MW7WuLsBG1WyKhzP$jY3Lc3IlGKD0DtCaD/LaTNB/J6Ntu6WpI7nWd1Vd318=','2026-11-15 01:10:22.490683',0,'gabriela','Gabriela','San Martín','',0,1,'2026-11-15 00:47:24.584884','guia'),(3,'pbkdf2_sha256$1000000$1d4qnaUSBnZFrRpNVI6pMQ$a2cFLN+JQFYaXOlBV0Nr3gvFA5dhzJx8xj+jSu1YrOY=','2026-11-15 01:10:22.971550',0,'joseismael','José Ismael','','',0,1,'2026-11-15 00:47:25.064503','guia'),(4,'pbkdf2_sha256$1000000$LH9DngzChPvTUrQAW3fJkX$vNq938Fo2DLHay1EP4Zinb2Cjulm3DHdyeHDfUoNr3I=','2026-11-15 01:10:23.468929',0,'mordelina','Mordelina','Orellana','',0,1,'2026-11-15 00:47:25.564113','turista'),(5,'pbkdf2_sha256$1000000$o1lXKyClgLmIBJts9hDGkG$wJgi6fLkeYJ6OlrrMj6gKFDsTK8xST2pR71Bh/f6wVo=','2026-11-15 01:10:23.956962',0,'javier','Javier','Orellana','',0,1,'2026-11-15 00:47:26.061826','turista');
+INSERT INTO `cuentas_usuario` VALUES (1,'pbkdf2_sha256$1000000$UUwpHApcrNJ1yj3gb06Kxm$H3i002Ws8kkRpBqhmXo9Ur98g188IdAXAjhzSRRmxRE=','2026-11-15 16:19:40.484136',1,'fernando','Fernando','Orellana','',1,1,'2026-11-15 00:47:24.098262','admin'),(2,'pbkdf2_sha256$1000000$Uo6Y45MW7WuLsBG1WyKhzP$jY3Lc3IlGKD0DtCaD/LaTNB/J6Ntu6WpI7nWd1Vd318=','2026-11-15 16:18:31.100970',0,'gabriela','Gabriela','San Martín','',0,1,'2026-11-15 00:47:24.584884','guia'),(3,'pbkdf2_sha256$1000000$1d4qnaUSBnZFrRpNVI6pMQ$a2cFLN+JQFYaXOlBV0Nr3gvFA5dhzJx8xj+jSu1YrOY=','2026-11-15 01:10:22.971550',0,'joseismael','José Ismael','','',0,1,'2026-11-15 00:47:25.064503','guia'),(4,'pbkdf2_sha256$1000000$LH9DngzChPvTUrQAW3fJkX$vNq938Fo2DLHay1EP4Zinb2Cjulm3DHdyeHDfUoNr3I=','2026-11-15 16:21:24.494630',0,'mordelina','Mordelina','Orellana','',0,1,'2026-11-15 00:47:25.564113','turista'),(5,'pbkdf2_sha256$1000000$o1lXKyClgLmIBJts9hDGkG$wJgi6fLkeYJ6OlrrMj6gKFDsTK8xST2pR71Bh/f6wVo=','2026-11-15 16:21:10.307266',0,'javier','Javier','Orellana','',0,1,'2026-11-15 00:47:26.061826','turista');
 /*!40000 ALTER TABLE `cuentas_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `cuentas_usuario_groups`;
@@ -199,7 +199,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('s5ev7obm494eubymdqykqb6g67gwz73j','.eJxVjLsKwzAMAP9FczGWZRw7Y_d-Q5Alu05bEshjKv33EsjQrnfHvWHgfWvDvpZlGBV6cHD5ZZnlWaZD6IOn-2xknrZlzOZIzGlXc5u1vK5n-zdovDbogZxSRvQRrVZL0Zcu5YjiXOqsZ_VIuVDoJIlIRUrZaWVCX0LgkAJ8vsXFN2k:1xSOWP:85l7hrSVcGKGTipXH1E2kedJKV9YhD1suD2iqApN9S8','2026-11-29 00:55:05.274099'),('zooyyrndyddp3ekpzwxlyhfn0k7ukker','.eJxVjDkOwjAQAP-yNbJ8ZH2kpOcN0dpe4wCypRwV4u8oUgpoZ0bzhon2rU77yss0ZxgB4fLLIqUnt0PkB7V7F6m3bZmjOBJx2lXceubX9Wz_BpXWCiN4CqhZZY2stfKFitE2DchoUMrAAUNBN6TBSFOUtKRtpODIBZ_QxgifL8YKNx8:1xSOlD:gOWQs1VIfuBt-lsE_ht6oWmGG4HSMPuFwkqKzirjg5M','2026-11-29 01:10:23.962835');
+INSERT INTO `django_session` VALUES ('2smygov4valu7m063cqr8aug30czlp0q','.eJxVjMsOgjAQAP9lz6ZpoY8tR-9-Q7PtbgU1kFA4Gf_dkHDQ68xk3pBo38a0N1nTxDCAgcsvy1SeMh-CHzTfF1WWeVunrI5Enbap28Lyup7t32CkNsIAfS7odURHbDCjjVYkEPdaLFcn0Xdacx-czRGlUrE2YzVOe4PRdCbA5wvfJTdT:1xScpR:faOIcwUROgMa_cxvTSleZ7esbYQ-FRq7tLC1TE5r0zU','2026-11-29 16:11:41.738796'),('bkqpk4jb1abskj584poh7eu13m6l2ufj','.eJxVjLsOgzAMAP_FcxWFlLwYu_MNyI7tQluBRGCq-u8VEkO73p3uDQPu2zjsVdZhYuighcsvIyxPmQ_BD5zviynLvK0TmSMxp62mX1het7P9G4xYR-ggt14koJIjEqvkxEYubeMy2SgFUxJKGoq7cs6B0SMKN-Q0eNGsET5fHbw5kA:1xScyq:wp1GEIiTdVD9Ulv02RiAMzLArJ6fywQi2kGR7jBdQAU','2026-11-29 16:21:24.501467'),('zooyyrndyddp3ekpzwxlyhfn0k7ukker','.eJxVjDkOwjAQAP-yNbJ8ZH2kpOcN0dpe4wCypRwV4u8oUgpoZ0bzhon2rU77yss0ZxgB4fLLIqUnt0PkB7V7F6m3bZmjOBJx2lXceubX9Wz_BpXWCiN4CqhZZY2stfKFitE2DchoUMrAAUNBN6TBSFOUtKRtpODIBZ_QxgifL8YKNx8:1xSOlD:gOWQs1VIfuBt-lsE_ht6oWmGG4HSMPuFwkqKzirjg5M','2026-11-29 01:10:23.962835');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `experiencias_categoria`;
@@ -212,7 +212,7 @@ CREATE TABLE `experiencias_categoria` (
   `activo` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `experiencias_categoria` WRITE;
@@ -239,7 +239,7 @@ CREATE TABLE `experiencias_experiencia` (
   CONSTRAINT `experiencias_experie_categoria_id_b03f452f_fk_experienc` FOREIGN KEY (`categoria_id`) REFERENCES `experiencias_categoria` (`id`),
   CONSTRAINT `experiencias_experie_creador_id_70b19025_fk_cuentas_u` FOREIGN KEY (`creador_id`) REFERENCES `cuentas_usuario` (`id`),
   CONSTRAINT `experiencias_experiencia_chk_1` CHECK ((`cupo_maximo` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `experiencias_experiencia` WRITE;
@@ -261,7 +261,7 @@ CREATE TABLE `experiencias_reserva` (
   KEY `experiencias_reserva_experiencia_id_ca702f09_fk_experienc` (`experiencia_id`),
   CONSTRAINT `experiencias_reserva_experiencia_id_ca702f09_fk_experienc` FOREIGN KEY (`experiencia_id`) REFERENCES `experiencias_experiencia` (`id`),
   CONSTRAINT `experiencias_reserva_usuario_id_8724df18_fk_cuentas_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `cuentas_usuario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `experiencias_reserva` WRITE;

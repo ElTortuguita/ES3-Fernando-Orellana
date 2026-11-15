@@ -86,6 +86,8 @@ El catálogo también es público para visitantes sin sesión. Los enlaces del m
 
 Las pruebas usan una base temporal con prefijo `test_`. El usuario MySQL necesita permisos para crearla y eliminarla. No cambian los datos demo. Se verifican permisos, asignación del creador, cupos, duplicados, privacidad del historial, CRUD administrativo, formularios, CSRF y cierre de sesión. El respaldo SQL se comprobó restaurándolo en una base temporal independiente.
 
+La revisión completa del 15 de noviembre de 2026 aprobó 19 pruebas automatizadas y un recorrido manual en el navegador. El detalle está en `documentacion/PRUEBA_FUNCIONAMIENTO.md`.
+
 ## Exportación desde Workbench
 
 En **Server > Data Export**, seleccionar únicamente `aventuras_del_sur_db`, elegir **Export to Self-Contained File**, indicar una ruta `.sql` e iniciar la exportación. Guardar el nuevo archivo en `base_datos/` si se modificaron datos para la entrega. No exportar las bases de otros proyectos.

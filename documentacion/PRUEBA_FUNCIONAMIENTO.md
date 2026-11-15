@@ -1,0 +1,71 @@
+# Prueba completa de funcionamiento
+
+Comprobación realizada el 15 de noviembre de 2026 en el computador de Fernando. Los flujos revisados funcionaron correctamente. Se ejecutaron 19 pruebas automatizadas sobre una base MySQL temporal y una prueba manual desde el navegador contra la aplicación iniciada desde VS Code.
+
+## Entorno comprobado
+
+- Django 5.2.18, con las dependencias del entorno virtual del proyecto.
+- MySQL80 local, conexión `127.0.0.1:3306` y base `aventuras_del_sur_db`.
+- Servidor Django en `http://127.0.0.1:8013/`.
+- Migraciones sin cambios pendientes de generar.
+
+## Pruebas automatizadas
+
+Comando: `.venv\Scripts\python.exe manage.py test experiencias --noinput`.
+
+Resultado final: **19 pruebas aprobadas**, sin fallos ni errores. La base de prueba se creó con las migraciones y se eliminó al finalizar. Las comprobaciones de permisos incluyen solicitudes GET y POST a las rutas restringidas.
+
+| Área | Comprobaciones |
+|---|---|
+| Autenticación | Login correcto, acceso privado sin sesión, logout por POST y protección CSRF |
+| Usuarios | Crear, listar, editar, desactivar y eliminar una cuenta sin dependencias |
+| Validación de usuarios | Usuario duplicado, contraseñas distintas y contraseña almacenada mediante hash |
+| Cuenta inactiva | Rechazo de un nuevo login y pérdida de acceso de una sesión existente |
+| Administrador | No puede eliminarse, desactivarse ni quitarse su propio rol |
+| Categorías | Crear, editar y eliminar sin dependencias; protección si tienen experiencias |
+| Experiencias | Crear, editar y eliminar según rol; creador asignado desde la sesión |
+| Autoría del guía | Lista y edición limitadas a registros propios, incluso por URL directa |
+| Formularios | Rechazo individual de precio negativo, cupo cero, fecha pasada, título vacío y categoría inactiva |
+| Cupos | Rechazo de una reserva cuando no hay cupo y de una reducción de cupo por debajo de las reservas existentes |
+| Catálogo | Exclusión de actividades inactivas, pasadas o con categoría inactiva |
+| Inscripción | Una reserva por usuario y actividad, usuario obtenido desde la sesión y estado inicial pendiente |
+| Historial | El turista consulta únicamente sus reservas y el administrador consulta todas |
+| Pagos | Solo el administrador actualiza el estado y un estado no permitido se rechaza |
+| Integridad | Usuarios, categorías y experiencias con dependencias no se eliminan |
+| Datos demo | Dos ejecuciones del comando no duplican registros y mantienen cinco cuentas, ocho experiencias y seis reservas iniciales |
+
+## Prueba manual en el navegador
+
+Se usó una categoría temporal llamada `Prueba integral 1511 editada` y una actividad temporal del mismo nombre.
+
+1. Fernando inició sesión, creó una categoría y editó su nombre. También accedió al listado y al formulario de usuarios.
+2. Gabriela inició sesión, creó una actividad para el 15 de diciembre de 2026 y luego editó el título y el precio de $15000 a $18000. La vista registró a Gabriela como creadora y no mostró la acción Eliminar.
+3. La búsqueda de DataTables encontró la actividad editada.
+4. Javier encontró la actividad en el catálogo y confirmó una reserva. El historial mostró pago pendiente.
+5. Un segundo intento de reserva mostró el mensaje de duplicado. MySQL conservó una sola reserva y quedó un cupo disponible de los dos iniciales.
+6. Fernando consultó la reserva y cambió el pago a Confirmado.
+7. Javier volvió a iniciar sesión y vio el estado Confirmado en su historial. El resultado también se comprobó directamente en MySQL.
+8. Javier intentó acceder a categorías escribiendo su URL y recibió la página de acceso denegado.
+9. Mordelina inició sesión y no pudo ver la reserva temporal de Javier en su historial.
+10. Con tres actividades temporales adicionales, el listado administrativo tuvo doce registros. Se verificó el paso de registros 1 a 10 a registros 11 a 12, el cambio a 25 registros por página, la búsqueda que filtró cuatro registros de doce y el ordenamiento numérico de precios.
+
+La creación y eliminación de usuarios, la eliminación de categorías y experiencias, y las validaciones adicionales se comprobaron en las pruebas automatizadas. La prueba manual no creó cuentas nuevas ni cambió contraseñas.
+
+## Limpieza y respaldo
+
+Se retiraron únicamente la categoría, cuatro actividades y una reserva creadas para la prueba manual. Se compararon los campos de los registros originales con una copia previa a la prueba: no cambiaron sus datos de negocio. Los inicios de sesión sí actualizan su fecha de último acceso.
+
+Estado final:
+
+| Tabla | Registros |
+|---|---:|
+| Usuarios | 5 |
+| Categorías | 4 |
+| Experiencias | 8 |
+| Reservas | 7 |
+
+Después de la limpieza se generó nuevamente `base_datos/aventuras_del_sur_mysql.sql`. Se restauró en una base independiente y se compararon los totales de las tablas principales. La restauración fue correcta y la base temporal se eliminó.
+
+## Alcance y límite conocido
+
+La comprobación cubre los flujos normales de la evaluación, formularios y permisos en el entorno local. No constituye una prueba de carga ni de todos los navegadores. El control de cupos comprueba las reservas de forma secuencial y no garantiza el límite ante solicitudes simultáneas, como ya se indica en el README. No se amplió ese mecanismo durante esta revisión.
