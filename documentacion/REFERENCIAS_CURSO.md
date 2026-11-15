@@ -37,5 +37,5 @@ Los repositorios permiten identificar técnicas utilizadas, pero no demuestran p
 | Sesión y acceso | Middleware de `settings.py`, `cuentas/urls.py`, mixin y decorador |
 | MySQL | `settings.py`, migraciones y `base_datos/` |
 | SB Admin 2 y DataTables | `templates/base.html`, `static/js/tablas.js` |
-| Cuentas y registros mínimos | `cargar_demo.py`, `CREDENCIALES.md` |
+| Cuentas y registros mínimos | `cargar_demo.py`, `CREDENCIALES.txt` |
 | Respaldo y documentación | SQL entregado, README y esta carpeta |

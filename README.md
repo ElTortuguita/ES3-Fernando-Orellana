@@ -31,9 +31,7 @@ Para iniciar:
 .\.venv\Scripts\python.exe manage.py runserver 127.0.0.1:8013
 ```
 
-Abrir http://127.0.0.1:8013/ y consultar `CREDENCIALES.md`. Las dependencias de SB Admin 2 y DataTables están guardadas localmente. La aplicación no necesita una CDN para mostrarse.
-
-Las cuentas de prueba también están en `CREDENCIALES.txt`, para abrirlas como texto simple en Bloc de notas.
+Abrir http://127.0.0.1:8013/ y consultar `CREDENCIALES.txt`, que se puede abrir con Bloc de notas. Las dependencias de SB Admin 2 y DataTables están guardadas localmente. La aplicación no necesita una CDN para mostrarse.
 
 ## Ejecución desde Visual Studio Code
 
