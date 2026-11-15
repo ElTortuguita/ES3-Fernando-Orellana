@@ -28,10 +28,14 @@ class UsuarioEditar(RolRequeridoMixin, UpdateView):
     template_name = 'formulario.html'
     success_url = reverse_lazy('cuentas:lista')
     extra_context = {'titulo': 'Editar usuario', 'volver': 'cuentas:lista'}
+
     def form_valid(self, form):
-        if self.object.pk == self.request.user.pk and (
-            form.cleaned_data['rol'] != 'admin' or not form.cleaned_data['is_active']
-        ):
+        # Separamos las condiciones para reconocer cuándo perdería su acceso.
+        es_mi_cuenta = self.object.pk == self.request.user.pk
+        cambia_rol = form.cleaned_data['rol'] != 'admin'
+        desactiva_cuenta = not form.cleaned_data['is_active']
+
+        if es_mi_cuenta and (cambia_rol or desactiva_cuenta):
             form.add_error(None, 'No puedes quitarte el acceso de administrador.')
             return self.form_invalid(form)
         return super().form_valid(form)

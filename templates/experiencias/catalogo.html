@@ -1,3 +1,4 @@
+{# Reutiliza el menú, los estilos y la estructura definidos en base.html. #}
 {% extends 'base.html' %}
 
 {% block contenido %}
@@ -20,7 +21,7 @@
                         {{ experiencia.cupos_disponibles }} cupos disponibles
                     </p>
 
-                    {# El botón depende de los cupos y del rol de la cuenta. #}
+                    {# La plantilla muestra el botón; la vista vuelve a comprobar los permisos. #}
                     {% if experiencia.cupos_disponibles > 0 %}
                         {% if user.rol == 'turista' %}
                             <a class="btn btn-success mt-auto"

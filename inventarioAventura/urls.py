@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import include, path
+# Estas rutas principales reparten las solicitudes entre las tres aplicaciones.
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),

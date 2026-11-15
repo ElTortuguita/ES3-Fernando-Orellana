@@ -94,6 +94,17 @@ Turista: No
 
 El catálogo también es público para visitantes sin sesión. Los enlaces del menú dependen del rol y cada vista vuelve a comprobar los permisos en el servidor. El campo creador se asigna desde la sesión y no desde un formulario enviado por el navegador.
 
+Recorrido del código para estudiar
+
+1. experiencias/models.py define los datos de categoría, experiencia y reserva, y sus relaciones.
+2. experiencias/urls.py conecta cada dirección con la vista correspondiente. name permite referirse a esa ruta desde las plantillas.
+3. experiencias/views.py consulta los datos, comprueba el rol y procesa las reservas y los cambios de pago.
+4. experiencias/forms.py define los campos editables y valida fechas, cupos y estado de pago.
+5. templates/experiencias/catalogo.html recorre las experiencias y muestra una tarjeta por actividad.
+6. templates/base.html contiene el menú y la estructura común de las páginas.
+
+Revisión de claridad: la vista reservar busca la experiencia una sola vez para mostrar la confirmación o guardar la reserva. Las condiciones de protección de la cuenta propia se separaron en variables con nombres claros. Se añadieron comentarios breves en modelos, rutas, vistas y plantillas, y se ordenó el HTML con saltos e indentación. Se mantienen las vistas con clases utilizadas en los ejercicios del curso.
+
 Decisiones funcionales
 
 - Se sigue el enunciado detallado del ecoparque. La mención inicial a una clínica veterinaria parece un resto de otra guía y debe confirmarse con el profesor si existen dudas.

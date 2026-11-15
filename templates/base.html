@@ -1,40 +1,98 @@
 {% load static %}
-<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% block title %}Aventuras del Sur{% endblock %}</title>
-<link rel="stylesheet" href="{% static 'vendor/fontawesome-free/css/all.min.css' %}">
-<link rel="stylesheet" href="{% static 'css/sb-admin-2.min.css' %}">
-<link rel="stylesheet" href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}">
-<link rel="stylesheet" href="{% static 'css/aventuras.css' %}">
-</head><body id="page-top"><div id="wrapper">
-{% if user.is_authenticated %}
-<ul class="navbar-nav sidebar sidebar-dark bg-gradient-success" id="accordionSidebar">
-<li><a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'core:panel' %}">Aventuras del Sur</a></li>
-<li class="nav-item"><a class="nav-link" href="{% url 'core:panel' %}">Mi panel</a></li>
-<li class="nav-item"><a class="nav-link" href="{% url 'experiencias:catalogo' %}">Catálogo público</a></li>
-{% if user.rol == 'admin' or user.rol == 'guia' %}<li class="nav-item"><a class="nav-link" href="{% url 'experiencias:lista' %}">Experiencias</a></li>{% endif %}
-{% if user.rol == 'admin' %}
-<li class="nav-item"><a class="nav-link" href="{% url 'experiencias:categorias' %}">Categorías</a></li>
-<li class="nav-item"><a class="nav-link" href="{% url 'cuentas:lista' %}">Usuarios</a></li>{% endif %}
-{% if user.rol == 'admin' or user.rol == 'turista' %}<li class="nav-item"><a class="nav-link" href="{% url 'experiencias:reservas' %}">{% if user.rol == 'turista' %}Mis reservas{% else %}Reservas{% endif %}</a></li>{% endif %}
-</ul>{% endif %}
-<div id="content-wrapper" class="d-flex flex-column"><div id="content">
-<nav class="navbar navbar-light bg-white topbar shadow-sm mb-4">
-<a class="navbar-brand text-success" href="{% url 'core:inicio' %}">Ecoparque y Reserva Natural</a>
-<div class="d-flex align-items-center flex-wrap">
-{% if user.is_authenticated %}<span class="mr-3">{{ user.username }} · {{ user.get_rol_display }}</span>
-<form method="post" action="{% url 'cuentas:logout' %}">{% csrf_token %}<button class="btn btn-outline-secondary btn-sm">Cerrar sesión</button></form>
-{% else %}<a class="btn btn-success" href="{% url 'cuentas:login' %}">Iniciar sesión</a>{% endif %}</div></nav>
-<main class="container-fluid pb-5">
-{% for message in messages %}<div class="alert alert-info" role="status">{{ message }}</div>{% endfor %}
-{% block contenido %}{% endblock %}</main></div>
-<footer class="bg-white p-3 text-center"><small>Aventuras del Sur · Programación Back End · Evaluación Sumativa 3</small></footer>
-</div></div>
-<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
-<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-<script src="{% static 'js/tablas.js' %}"></script>
-</body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Aventuras del Sur{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sb-admin-2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aventuras.css' %}">
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        {# El menú cambia según la sesión y el rol. Las vistas también verifican el acceso. #}
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav sidebar sidebar-dark bg-gradient-success" id="accordionSidebar">
+                <li>
+                    <a class="sidebar-brand d-flex align-items-center justify-content-center"
+                       href="{% url 'core:panel' %}">Aventuras del Sur</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'core:panel' %}">Mi panel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'experiencias:catalogo' %}">Catálogo público</a>
+                </li>
+
+                {% if user.rol == 'admin' or user.rol == 'guia' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'experiencias:lista' %}">Experiencias</a>
+                    </li>
+                {% endif %}
+
+                {% if user.rol == 'admin' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'experiencias:categorias' %}">Categorías</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cuentas:lista' %}">Usuarios</a>
+                    </li>
+                {% endif %}
+
+                {% if user.rol == 'admin' or user.rol == 'turista' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'experiencias:reservas' %}">
+                            {% if user.rol == 'turista' %}Mis reservas{% else %}Reservas{% endif %}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-light bg-white topbar shadow-sm mb-4">
+                    <a class="navbar-brand text-success" href="{% url 'core:inicio' %}">
+                        Ecoparque y Reserva Natural
+                    </a>
+                    <div class="d-flex align-items-center flex-wrap">
+                        {% if user.is_authenticated %}
+                            <span class="mr-3">{{ user.username }} · {{ user.get_rol_display }}</span>
+                            <form method="post" action="{% url 'cuentas:logout' %}">
+                                {% csrf_token %}
+                                <button class="btn btn-outline-secondary btn-sm">Cerrar sesión</button>
+                            </form>
+                        {% else %}
+                            <a class="btn btn-success" href="{% url 'cuentas:login' %}">Iniciar sesión</a>
+                        {% endif %}
+                    </div>
+                </nav>
+
+                <main class="container-fluid pb-5">
+                    {% for message in messages %}
+                        <div class="alert alert-info" role="status">{{ message }}</div>
+                    {% endfor %}
+
+                    {# Cada plantilla hija coloca aquí su contenido. #}
+                    {% block contenido %}{% endblock %}
+                </main>
+            </div>
+
+            <footer class="bg-white p-3 text-center">
+                <small>Aventuras del Sur · Programación Back End · Evaluación Sumativa 3</small>
+            </footer>
+        </div>
+    </div>
+
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'js/tablas.js' %}"></script>
+</body>
+</html>

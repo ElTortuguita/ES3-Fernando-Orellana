@@ -1,4 +1,18 @@
-{% extends 'base.html' %}{% block contenido %}
-<div class="card p-4 contenido-form"><h1>{{ titulo }}</h1><form method="post">{% csrf_token %}{{ form.as_p }}
-<button type="submit" class="btn btn-success">Guardar</button> <a class="btn btn-secondary" href="{% url volver %}">Volver</a></form></div>
+{% extends 'base.html' %}
+
+{% block contenido %}
+    <div class="card p-4 contenido-form">
+        <h1>{{ titulo }}</h1>
+
+        {# POST envía los datos a la vista; csrf_token protege el envío. #}
+        <form method="post">
+            {% csrf_token %}
+
+            {# Django muestra los campos y los errores del formulario. #}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a class="btn btn-secondary" href="{% url volver %}">Volver</a>
+        </form>
+    </div>
 {% endblock %}

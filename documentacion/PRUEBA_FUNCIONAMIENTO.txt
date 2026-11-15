@@ -105,3 +105,6 @@ Después de la limpieza se generó nuevamente base_datos/aventuras_del_sur_mysql
 Alcance y límite conocido
 
 La comprobación cubre los flujos normales de la evaluación, formularios y permisos en el entorno local. No constituye una prueba de carga ni de todos los navegadores. El control de cupos comprueba las reservas de forma secuencial y no garantiza el límite ante solicitudes simultáneas, como ya se indica en el README. No se amplió ese mecanismo durante esta revisión.
+
+Revisión de claridad del código (15 de noviembre de 2026)
+Se simplificó la consulta de la reserva, se comentaron modelos, rutas y vistas y se ordenaron las plantillas. Verificación posterior: manage.py check sin problemas; makemigrations --check --dry-run sin cambios; las 19 pruebas de experiencias aprobadas en 18,397 segundos.
