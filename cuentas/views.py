@@ -5,7 +5,21 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.db.models.deletion import ProtectedError
 from .mixins import RolRequeridoMixin
 from .models import Usuario
-from .forms import UsuarioCrearForm, UsuarioEditarForm
+from .forms import UsuarioCrearForm, UsuarioEditarForm, RegistroForm
+
+
+class Registro(CreateView):
+    form_class = RegistroForm
+    template_name = 'formulario.html'
+    success_url = reverse_lazy('cuentas:login')
+    extra_context = {'titulo': 'Crear cuenta de turista', 'volver': 'cuentas:login'}
+
+    def form_valid(self, form):
+        form.instance.rol = 'turista'
+        form.instance.is_staff = False
+        form.instance.is_superuser = False
+        messages.success(self.request, 'Cuenta creada. Ahora puedes iniciar sesión.')
+        return super().form_valid(form)
 
 class UsuarioLista(RolRequeridoMixin, ListView):
     roles_permitidos = ('admin',)

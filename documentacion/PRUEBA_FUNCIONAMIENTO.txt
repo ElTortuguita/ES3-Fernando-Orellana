@@ -108,3 +108,6 @@ La comprobación cubre los flujos normales de la evaluación, formularios y perm
 
 Revisión de claridad del código (15 de noviembre de 2026)
 Se simplificó la consulta de la reserva, se comentaron modelos, rutas y vistas y se ordenaron las plantillas. Verificación posterior: manage.py check sin problemas; makemigrations --check --dry-run sin cambios; las 19 pruebas de experiencias aprobadas en 18,397 segundos.
+
+Actualización del 17 de noviembre de 2026: se aprobaron 22 pruebas en 25,926 segundos. Incluyen el recorrido del profesor con guía nuevo, categoría desactivada, cupo mínimo 2, registro público sin elevación de permisos, compañeros y pago exclusivo del guía responsable. Los resultados anteriores describen la versión previa.
+Comprobación HTTP posterior: inicio de sesión real como fernando, gabriela y javier; listado de reservas; formulario de pago del guía; compañeros; registro y catálogo públicos. Respaldo SQL restaurado en base temporal: 5 usuarios, 4 categorías, 8 experiencias y 8 reservas.

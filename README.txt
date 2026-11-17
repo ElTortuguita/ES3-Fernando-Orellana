@@ -19,7 +19,7 @@ Crear las tablas y los datos demo desde Django:
 .\.venv\Scripts\python.exe manage.py migrate
 .\.venv\Scripts\python.exe manage.py cargar_demo
 
-Restaurar el respaldo entregado: en Workbench, abrir Server > Data Import, elegir Import from Self-Contained File, seleccionar base_datos/aventuras_del_sur_mysql.sql, elegir aventuras_del_sur_db como esquema de destino e iniciar la importación. Usar un esquema nuevo o vacío para no sobrescribir trabajo existente. Después ejecutar manage.py migrate para comprobar el estado de las migraciones. El respaldo contiene 5 usuarios, 4 categorías, 8 experiencias y 7 reservas. El comando demo crea 6 reservas iniciales como mínimo y no borra registros existentes.
+Restaurar el respaldo entregado: en Workbench, abrir Server > Data Import, elegir Import from Self-Contained File, seleccionar base_datos/aventuras_del_sur_mysql.sql, elegir aventuras_del_sur_db como esquema de destino e iniciar la importación. Usar un esquema nuevo o vacío para no sobrescribir trabajo existente. Después ejecutar manage.py migrate para comprobar el estado de las migraciones. El respaldo contiene 5 usuarios, 4 categorías, 8 experiencias y 8 reservas. El comando demo crea 6 reservas iniciales como mínimo y no borra registros existentes.
 
 Para iniciar:
 
@@ -37,7 +37,7 @@ Organización
 
 - inventarioAventura: configuración, rutas generales y conexión MySQL.
 - core: bienvenida pública y panel según el rol.
-- cuentas: usuario extendido, login, logout y gestión administrativa de usuarios.
+- cuentas: usuario extendido, registro público de turistas, login, logout y gestión administrativa de usuarios.
 - experiencias: modelos, formularios, CRUD, catálogo e inscripciones.
 - templates: plantillas con herencia de base.html.
 - static: SB Admin 2, Bootstrap, jQuery, DataTables y estilos del proyecto.
@@ -83,12 +83,12 @@ Turista: Sí, a su nombre
 
 Acción: Consultar reservas
 Administrador: Todas
-Guía: No
+Guía: Solo las de sus propias experiencias
 Turista: Solo propias
 
 Acción: Actualizar estado de pago
-Administrador: Sí
-Guía: No
+Administrador: No
+Guía: Sí, solo las de sus propias experiencias
 Turista: No
 
 
@@ -109,7 +109,7 @@ Decisiones funcionales
 
 - Se sigue el enunciado detallado del ecoparque. La mención inicial a una clínica veterinaria parece un resto de otra guía y debe confirmarse con el profesor si existen dudas.
 - Experiencia.activo permite implementar el catálogo de experiencias activas que pide la pauta. Se muestran actividades futuras, activas y cuya categoría también está activa.
-- Una reserva ocupa una plaza. Tanto pagos pendientes como confirmados consumen cupo. No se integra un pago bancario: el administrador registra su estado.
+- Una reserva ocupa una plaza. Tanto pagos pendientes como confirmados consumen cupo. No se integra un pago bancario: el guía responsable registra su estado.
 - Un turista no puede inscribirse dos veces en una misma experiencia. La base también exige la combinación única usuario y experiencia.
 - Los registros relacionados se protegen con PROTECT. Si una categoría tiene experiencias o una experiencia tiene reservas, se ofrece desactivarla para conservar el historial. Un registro sin dependencias sí puede eliminarse.
 - El administrador no puede eliminar su propia cuenta, desactivarse o quitarse su rol desde el panel.
@@ -141,3 +141,12 @@ Repositorio de esta evaluación: https://github.com/ElTortuguita/ES3-Fernando-Or
 Alcance
 
 Proyecto para demostración local. DEBUG está habilitado y la clave de Django y credenciales demo son de desarrollo. Antes de publicar en Internet se debe configurar el despliegue y cambiar las credenciales. La fecha de entrega informada es el lunes 16 de noviembre de 2026 y la exposición dura entre 5 y 7 minutos.
+
+Actualización del recorrido de evaluación del 17 de noviembre de 2026
+
+- Crear cuenta permite registrarse como turista, sin elegir permisos. El administrador crea las cuentas de guía.
+- El cupo máximo mínimo es 2; se rechazan cupos negativos, cero y uno.
+- El guía responsable confirma los pagos de sus propias actividades. El administrador consulta las reservas pero no modifica sus pagos.
+- Ver compañeros muestra los nombres de los turistas inscritos en la misma actividad. Solo pueden entrar el administrador, el guía responsable y los turistas inscritos; no muestra correos ni contraseñas.
+- Hay tres apps: core, cuentas y experiencias. inventarioAventura contiene la configuración del proyecto y no es una app adicional.
+- Se aprobaron 22 pruebas automatizadas después de estos cambios. El recorrido detallado está en documentacion/RECORRIDO_PROFESOR.txt.

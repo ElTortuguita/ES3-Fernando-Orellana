@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 app_name = 'cuentas'
 urlpatterns = [
+    path('registro/', views.Registro.as_view(), name='registro'),
     # Django comprueba las credenciales y administra la sesión.
     path(
         'login/',

@@ -11,6 +11,7 @@ urlpatterns = [
 
     # pk es el identificador numérico de la experiencia elegida.
     path('catalogo/<int:pk>/reservar/', views.reservar, name='reservar'),
+    path('<int:pk>/participantes/', views.Participantes.as_view(), name='participantes'),
 
     # Listar, crear, editar y eliminar experiencias del panel privado.
     # as_view() permite utilizar una vista definida como clase.
@@ -25,7 +26,7 @@ urlpatterns = [
     path('categorias/<int:pk>/editar/', views.CategoriaEditar.as_view(), name='categoria_editar'),
     path('categorias/<int:pk>/eliminar/', views.CategoriaEliminar.as_view(), name='categoria_eliminar'),
 
-    # Historial de reservas y actualización administrativa del pago.
+    # Historial de reservas y actualización del pago por el guía responsable.
     path('reservas/', views.ReservaLista.as_view(), name='reservas'),
     path('reservas/<int:pk>/pago/', views.PagoEditar.as_view(), name='pago'),
 ]

@@ -16,7 +16,7 @@ class PermisosYReservasTests(TestCase):
         cls.turista2 = Usuario.objects.create_user('otro_turista', rol='turista')
         cls.categoria = Categoria.objects.create(nombre='Trekking', descripcion='Senderos')
         cls.experiencia = Experiencia.objects.create(titulo='Bosque', descripcion='Caminata', precio=12000,
-            cupo_maximo=1, fecha=timezone.now() + timedelta(days=15), categoria=cls.categoria, creador=cls.guia)
+            cupo_maximo=2, fecha=timezone.now() + timedelta(days=15), categoria=cls.categoria, creador=cls.guia)
         cls.ajena = Experiencia.objects.create(titulo='Laguna ajena', descripcion='Kayak', precio=18000,
             cupo_maximo=5, fecha=timezone.now() + timedelta(days=16), categoria=cls.categoria, creador=cls.otro)
 
@@ -42,7 +42,7 @@ class PermisosYReservasTests(TestCase):
 
     def test_guia_no_elimina_ni_gestiona_categorias_o_usuarios(self):
         self.client.force_login(self.guia)
-        for nombre in ['experiencias:categorias', 'cuentas:lista', 'experiencias:reservas']:
+        for nombre in ['experiencias:categorias', 'cuentas:lista']:
             self.assertEqual(self.client.get(reverse(nombre)).status_code, 403)
         self.assertEqual(self.client.post(reverse('experiencias:eliminar', args=[self.experiencia.pk])).status_code, 403)
         self.assertTrue(Experiencia.objects.filter(pk=self.experiencia.pk).exists())
@@ -64,17 +64,20 @@ class PermisosYReservasTests(TestCase):
         reserva = Reserva.objects.get()
         self.assertEqual(reserva.usuario, self.turista)
         self.assertEqual(reserva.estado_pago, 'pendiente')
+        Reserva.objects.create(usuario=self.admin, experiencia=self.experiencia)
         self.client.force_login(self.turista2)
         self.client.post(url)
-        self.assertEqual(Reserva.objects.count(), 1)
+        self.assertEqual(Reserva.objects.count(), 2)
 
-    def test_historial_personal_y_pago_solo_admin(self):
+    def test_historial_personal_y_pago_solo_guia_responsable(self):
         reserva = Reserva.objects.create(usuario=self.turista2, experiencia=self.ajena)
         self.client.force_login(self.turista)
         self.assertNotContains(self.client.get(reverse('experiencias:reservas')), 'Laguna ajena')
         self.assertEqual(self.client.post(reverse('experiencias:pago', args=[reserva.pk]), {'estado_pago': 'confirmado'}).status_code, 403)
         self.client.force_login(self.admin)
         self.assertContains(self.client.get(reverse('experiencias:reservas')), 'Laguna ajena')
+        self.assertEqual(self.client.post(reverse('experiencias:pago', args=[reserva.pk]), {'estado_pago': 'confirmado'}).status_code, 403)
+        self.client.force_login(self.otro)
         self.client.post(reverse('experiencias:pago', args=[reserva.pk]), {'estado_pago': 'confirmado'})
         reserva.refresh_from_db()
         self.assertEqual(reserva.estado_pago, 'confirmado')

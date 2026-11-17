@@ -5,7 +5,7 @@ from django.db.models.deletion import ProtectedError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from cuentas.mixins import RolRequeridoMixin
 from .models import Categoria, Experiencia, Reserva
 from .forms import CategoriaForm, ExperienciaForm, PagoForm
@@ -152,24 +152,44 @@ def reservar(request, pk):
 
 
 class ReservaLista(RolRequeridoMixin, ListView):
-    roles_permitidos = ('admin', 'turista')
+    roles_permitidos = ('admin', 'guia', 'turista')
     model = Reserva
     template_name = 'experiencias/reservas.html'
     context_object_name = 'reservas'
 
     def get_queryset(self):
-        # El turista ve su historial; el administrador ve todas las reservas.
+        # Cada turista ve su historial; cada guía, sus actividades; el administrador, todas.
         reservas = Reserva.objects.all()
         if self.request.user.rol == 'turista':
             reservas = reservas.filter(usuario=self.request.user)
+        elif self.request.user.rol == 'guia':
+            reservas = reservas.filter(experiencia__creador=self.request.user)
         return reservas.order_by('-fecha_inscripcion')
 
 
-# Este formulario solo permite modificar el estado de pago y requiere administrador.
+# El guía responsable confirma los pagos de sus propias experiencias.
 class PagoEditar(RolRequeridoMixin, UpdateView):
-    roles_permitidos = ('admin',)
+    roles_permitidos = ('guia',)
     model = Reserva
     form_class = PagoForm
     template_name = 'formulario.html'
     success_url = reverse_lazy('experiencias:reservas')
     extra_context = {'titulo': 'Actualizar estado de pago', 'volver': 'experiencias:reservas'}
+
+    def get_queryset(self):
+        return Reserva.objects.filter(experiencia__creador=self.request.user)
+
+
+class Participantes(RolRequeridoMixin, DetailView):
+    roles_permitidos = ('admin', 'guia', 'turista')
+    model = Experiencia
+    template_name = 'experiencias/participantes.html'
+    context_object_name = 'experiencia'
+
+    def get_queryset(self):
+        experiencias = Experiencia.objects.all()
+        if self.request.user.rol == 'guia':
+            return experiencias.filter(creador=self.request.user)
+        if self.request.user.rol == 'turista':
+            return experiencias.filter(reservas__usuario=self.request.user)
+        return experiencias

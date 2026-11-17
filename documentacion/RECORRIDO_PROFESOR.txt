@@ -1,0 +1,73 @@
+RECORRIDO DE EVALUACION - ACTUALIZADO EL 17 DE NOVIEMBRE DE 2026
+
+1. Abrir http://127.0.0.1:8013/ e iniciar sesión como fernando.
+   Diseño: SB Admin 2 basado en Bootstrap. DataTables organiza las tablas.
+   Nuestro panel por roles es propio; /admin/ es el administrador de Django.
+
+2. En Usuarios, crear un guía con nombre de usuario nuevo y contraseña Soldierx991.
+   Elegir rol Guía / Operador. Solo el administrador puede asignar ese rol.
+
+3. En Categorías, abrir Editar, desmarcar Activo y guardar una categoría.
+   Se conserva el historial. Sus actividades dejan de aparecer en el catálogo.
+
+4. En Experiencias, usar Ver participantes para consultar los turistas de una actividad.
+   No son varios usuarios en una misma reserva: cada turista tiene su reserva,
+   y varias reservas apuntan a la misma experiencia.
+
+5. Cerrar sesión con el botón e ingresar con el guía recién creado.
+   En Experiencias, pulsar Crear experiencia.
+
+6. Probar las validaciones una por una, manteniendo los otros campos válidos:
+   - Precio -1: se rechaza. Precio 0 se permite.
+   - Cupo -1, 0 o 1: se rechaza. El mínimo es 2.
+   - Fecha y hora anteriores al momento actual: se rechazan.
+   - Categoría: la desactivada no aparece al crear una experiencia.
+   La edición conserva la categoría actual de una actividad antigua aunque esté
+   inactiva; esto permite mantener su relación sin perder el historial.
+   Finalmente guardar con precio 12000, cupo 2 o más y fecha/hora futuras.
+   El creador se asigna a partir de la sesión, no se elige en el formulario.
+
+7. Cerrar sesión e ingresar como javier o mordelina.
+   También se puede pulsar Crear cuenta desde la bienvenida o el inicio de sesión.
+   El registro público siempre crea un turista, sin permisos de guía ni administrador.
+
+8. En el catálogo, elegir la actividad nueva y pulsar Reservar.
+   La primera pantalla solo muestra la confirmación. Confirmar reserva la guarda
+   con pago pendiente. Mis reservas muestra el historial del usuario.
+
+9. Para demostrar compañeros, inscribir a otro turista en esa misma actividad.
+   En Mis reservas, pulsar Ver compañeros. Se muestran nombres, sin correos ni claves.
+   Solo acceden los turistas inscritos, el guía responsable y el administrador.
+
+10. Cerrar sesión e ingresar como el guía que creó la actividad.
+    En Reservas aparecen únicamente las reservas de sus experiencias.
+    Pulsar Actualizar, elegir Confirmado y guardar.
+    El administrador no confirma pagos. Otro guía tampoco puede modificar este pago.
+    Volver como cliente para comprobar el estado Confirmado.
+
+ARCHIVOS PARA MOSTRAR
+
+- inventarioAventura/settings.py: DATABASES configura MySQL, nombre de base,
+  host, puerto y credenciales. config_local.py aporta la contraseña del equipo.
+  El respaldo SQL se restaura en Workbench; no se importa desde settings.py.
+- inventarioAventura/urls.py: reparte las direcciones entre core, cuentas y experiencias.
+- experiencias/urls.py: selecciona las vistas del catálogo, reservas y pagos.
+- experiencias/models.py: Experiencia tiene FK categoria y creador.
+  Reserva tiene FK usuario y experiencia. PROTECT conserva registros relacionados.
+- experiencias/forms.py: validaciones de fecha/hora, precio, cupo y categoría.
+- cuentas/forms.py: formularios de usuarios y registro público sin campo rol.
+- cuentas/mixins.py: exige sesión y rol permitido.
+- experiencias/views.py: filtros por creador/usuario y guardado de las reservas.
+- templates/base.html y templates/experiencias/catalogo.html: diseño común y tarjetas.
+
+ESTRUCTURA ACTUAL
+
+inventarioAventura es el paquete de configuración del proyecto.
+Las tres apps propias registradas en INSTALLED_APPS son core, cuentas y experiencias.
+No se han fusionado apps basándose en un requisito que todavía no está confirmado.
+
+VERIFICACION
+
+22 pruebas automatizadas aprobadas contra una base MySQL temporal, incluyendo
+el recorrido anterior, permisos por rol, compañeros, registro, cupos y categorías.
+Las pruebas no agregan registros de ensayo a la base utilizada en la exposición.

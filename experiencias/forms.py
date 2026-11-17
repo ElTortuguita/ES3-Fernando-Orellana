@@ -49,7 +49,7 @@ class ExperienciaForm(forms.ModelForm):
         return cupo
 
 class PagoForm(forms.ModelForm):
-    # El administrador cambia el pago sin modificar al turista ni la actividad.
+    # El guía responsable cambia el pago sin modificar al turista ni la actividad.
     class Meta:
         model = Reserva
         fields = ['estado_pago']

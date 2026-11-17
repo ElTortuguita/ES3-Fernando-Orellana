@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block contenido %}
+    <h1>Participantes de {{ experiencia.titulo }}</h1>
+    <p>Guía responsable: {{ experiencia.creador }}</p>
+    <p>Estas personas comparten la actividad; cada una tiene su propia reserva.</p>
+    <div class="card p-3">
+        <ul>
+            {% for reserva in experiencia.reservas.all %}
+                <li>{{ reserva.usuario }}{% if reserva.usuario == user %} (tú){% endif %}</li>
+            {% empty %}
+                <li>Todavía no hay turistas inscritos.</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <a class="btn btn-secondary mt-3" href="{% url 'experiencias:reservas' %}">Ver reservas</a>
+{% endblock %}

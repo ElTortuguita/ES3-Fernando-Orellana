@@ -49,7 +49,7 @@ Ingresa como javier, abre el catálogo y reserva “Campamento Mordelina”, que
 
 “La reserva toma el usuario desde la sesión. Primero compruebo que la actividad esté disponible, que el turista no tenga una reserva repetida y que quede cupo. El pago empieza pendiente. Después consulto las reservas filtrando por el usuario actual. El turista no puede cambiar su estado de pago.”
 
-Comprueba que el mensaje confirme la inscripción y que aparezca en el historial. Si sobra tiempo, cambia al administrador y actualiza el pago de esa reserva.
+Comprueba que el mensaje confirme la inscripción y que aparezca en el historial. Si sobra tiempo, cambia al guía creador de la actividad y actualiza el pago de esa reserva. El administrador no puede confirmar pagos.
 
 5:15 a 6:00 Cierre técnico
 
@@ -86,3 +86,5 @@ Ejercicios antes de entregar
 3. Intenta editar una experiencia del otro guía.
 4. Intenta reservar dos veces y revisa que no aumente el número de inscripciones.
 5. Distingue get_queryset, form_valid, ModelForm y ForeignKey con ejemplos de este proyecto.
+
+Para la evaluación actual sigue documentacion/RECORRIDO_PROFESOR.txt. Incluye registro público, cupo mínimo 2 y compañeros de actividad.

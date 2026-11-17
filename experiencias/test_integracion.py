@@ -67,11 +67,12 @@ class FuncionamientoCompletoTests(TestCase):
         self.assertEqual(reserva.estado_pago, 'pendiente')
         self.assertEqual(experiencia.cupos_disponibles, 1)
 
-        self.ingresar(self.admin)
+        self.ingresar(self.guia)
         self.client.post(reverse('experiencias:pago', args=[reserva.pk]), {'estado_pago': 'confirmado'})
         reserva.refresh_from_db()
         self.assertEqual(reserva.estado_pago, 'confirmado')
         self.assertContains(self.client.get(reverse('experiencias:reservas')), 'Confirmado')
+        self.ingresar(self.admin)
         self.client.post(reverse('experiencias:eliminar', args=[experiencia.pk]))
         self.client.post(reverse('experiencias:categoria_eliminar', args=[categoria.pk]))
         self.client.post(reverse('cuentas:eliminar', args=[self.guia.pk]))
@@ -132,7 +133,6 @@ class FuncionamientoCompletoTests(TestCase):
             reverse('experiencias:categoria_editar', args=[categoria.pk]),
             reverse('experiencias:categoria_eliminar', args=[categoria.pk]),
             reverse('experiencias:eliminar', args=[experiencia.pk]),
-            reverse('experiencias:pago', args=[reserva.pk]),
         ]
         for usuario in [self.guia, self.turista]:
             self.ingresar(usuario)
@@ -158,7 +158,7 @@ class FuncionamientoCompletoTests(TestCase):
         categoria, experiencia = self.actividad()
         inactiva = Categoria.objects.create(nombre='Inactiva', descripcion='Oculta', activo=False)
         self.ingresar(self.guia)
-        for campo, valor in [('precio', -1), ('cupo_maximo', 0), ('fecha', '2020-01-01T12:00'),
+        for campo, valor in [('precio', -1), ('cupo_maximo', -1), ('cupo_maximo', 0), ('cupo_maximo', 1), ('fecha', '2020-01-01T12:00'),
                              ('categoria', inactiva.pk), ('titulo', '')]:
             with self.subTest(campo=campo):
                 datos = self.datos(categoria, **{campo: valor})
@@ -207,6 +207,7 @@ class FuncionamientoCompletoTests(TestCase):
         self.assertEqual(Usuario.objects.count(), 3)
         _, experiencia = self.actividad()
         reserva = Reserva.objects.create(usuario=self.turista, experiencia=experiencia)
+        self.ingresar(self.guia)
         self.assertEqual(self.client.post(reverse('experiencias:pago', args=[reserva.pk]),
                                          {'estado_pago': 'pagado_inventado'}).status_code, 200)
         reserva.refresh_from_db()

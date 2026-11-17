@@ -28,7 +28,7 @@ Rol: Turista / Cliente
 Contraseña: Soldierx991
 
 Cada guía tiene cuatro experiencias. El respaldo SQL entregado contiene
-cuatro reservas de Mordelina y tres de Javier. Las reservas que se agreguen
+cuatro reservas de Mordelina y cuatro de Javier. Las reservas que se agreguen
 durante los ensayos aumentan los totales de la base local.
 
 CONEXION MYSQL

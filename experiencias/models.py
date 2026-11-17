@@ -23,7 +23,7 @@ class Experiencia(models.Model):
         decimal_places=0,
         validators=[MinValueValidator(0)],
     )
-    cupo_maximo = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    cupo_maximo = models.PositiveIntegerField(validators=[MinValueValidator(2)])
     fecha = models.DateTimeField('Fecha y hora')
     activo = models.BooleanField(default=True)
 
